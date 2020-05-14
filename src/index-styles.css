@@ -77,6 +77,8 @@ div {
   overflow-y: auto;
   flex-wrap: wrap;
   background-color: white;
+  border: 1px solid #c3c2cf;
+  border-radius: 4px;
   margin-top: 24px;
   padding: 8px 7px;
 }
