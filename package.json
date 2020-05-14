@@ -1,0 +1,36 @@
+{
+  "name": "emails-tags-input",
+  "version": "0.0.1",
+  "description": "An experiment towards a \"vanilla\" web component with Typescript + webpack ie11",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "webpack --mode development --watch",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gilsoncav/emails-tags-input.git"
+  },
+  "keywords": [
+    "typescript",
+    "vanilla",
+    "web-component",
+    "webpack",
+    "ie11"
+  ],
+  "author": "Gilson Cavalcanti",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gilsoncav/emails-tags-input/issues"
+  },
+  "homepage": "https://github.com/gilsoncav/emails-tags-input#readme",
+  "dependencies": {
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "devDependencies": {
+    "ts-loader": "^7.0.4",
+    "typescript": "^3.9.2",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
