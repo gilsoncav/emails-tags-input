@@ -27,9 +27,23 @@ div {
 }
 
 #form-footer {
+  display: flex;
+  align-items: flex-end;
   min-height: 96px;
   background-color: white;
   border-radius: 0 8px 8px 0;
+  padding: 0 50px 32px 50px;
+}
+
+#form-footer > button {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  height: 40px;
+  padding: 8px 16px;
+  margin-right: 16px;
+  border-radius: 6px;
+  background-color: #4262ff;
+  color: white;
 }
 
 #emails-input {
