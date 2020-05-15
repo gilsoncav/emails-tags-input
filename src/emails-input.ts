@@ -1,6 +1,10 @@
 import './styles/emails-input.scss';
 
 interface EmailsInputOptions {
+  /**
+   * html string to be the content of the label
+   */
+  labelHTMLContent: string;
   onMailsListChange: (mailsList: EmailList) => void;
 }
 
@@ -12,22 +16,32 @@ interface Email {
 type EmailList = Email[];
 
 export default class EmailsInput {
-  containerNode: HTMLElement;
+  readonly containerNode: HTMLElement;
+  private divEmailsInput: HTMLDivElement;
+  private label: HTMLSpanElement;
+  readonly options: EmailsInputOptions;
 
   constructor(containerNode: HTMLElement, options: EmailsInputOptions) {
+    this.options = options;
     this.containerNode = containerNode;
-
-    this.render();
+    this.divEmailsInput = this.renderDivEmailsInput();
+    this.label = this.renderLabel();
   }
 
-  /**
-   * Renders the component in the external provided container DOM node
-   */
-  private render() {
-    const divEmailsInput = document.createElement('div');
-    divEmailsInput.className = 'gct-emails-input';
+  private renderDivEmailsInput(): HTMLDivElement {
+    const div = document.createElement('div');
+    div.className = 'gct-emails-input';
+    this.containerNode.appendChild(div);
 
-    this.containerNode.appendChild(divEmailsInput);
+    return div;
+  }
+
+  private renderLabel(): HTMLSpanElement {
+    const elem = document.createElement('label');
+    elem.innerHTML = this.options.labelHTMLContent;
+    this.divEmailsInput.appendChild(elem);
+
+    return elem;
   }
 }
 

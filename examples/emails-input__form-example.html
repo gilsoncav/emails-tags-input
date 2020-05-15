@@ -23,8 +23,11 @@
     </form>
     <script src="../dist/emails-input.js"></script>
     <script>
+      var options = {
+        labelHTMLContent: 'Share <strong>Board Name</strong> with others',
+      };
       var inputContainerNode = document.querySelector('#emails-input');
-      var input = new EmailsInput(inputContainerNode);
+      var input = new EmailsInput(inputContainerNode, { ...options });
       // Handling Add email and Get emails count buttons, etc.
     </script>
   </body>
