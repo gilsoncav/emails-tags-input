@@ -70,7 +70,9 @@ div {
 .gct-emails-input input {
 }
 
-.gct-emails-input__label {
+.gct-emails-input__label,
+.gct-emails-input__label strong {
+  font-size: 20px;
 }
 
 /* The container that displays the entered email Blocks */
