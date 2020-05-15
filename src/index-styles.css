@@ -35,6 +35,7 @@ div {
   padding: 0 50px 32px 50px;
 }
 
+/* TODO eliminate default focus ring blue outline of the buttons */
 #form-footer > button {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
@@ -61,14 +62,18 @@ div {
   justify-content: space-between;
 }
 
-.gct-emails-input > * {
-  font-family: 'Open Sans', 'sans-serif';
+.gct-emails-input * {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+}
+
+.gct-emails-input input {
 }
 
 .gct-emails-input__label {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 20px;
 }
+
+/* The container that displays the entered email Blocks */
 
 .gct-emails-input__blocks-window {
   display: flex;
@@ -83,6 +88,8 @@ div {
   padding: 8px 7px;
 }
 
+/* Related to entered emails (emails Blocks) */
+
 .gct-emails-input__block {
   display: flex;
   align-items: center;
@@ -92,6 +99,14 @@ div {
   border-radius: 12px;
   padding-left: 10px;
   margin: 0 2px 4px 0;
+}
+
+/* TODO review this flag - has potential to conflict with external elements styling */
+.invalid {
+  background-color: transparent;
+  border-bottom: 1px dashed #d92929;
+  border-radius: 0;
+  padding-left: 4px;
 }
 
 .gct-emails-input__block img {
