@@ -2,10 +2,19 @@ const nodeExternals = require('webpack-node-externals');
 const path = require('path');
 
 module.exports = {
-  target: 'node',
+  target: 'web',
   externals: [nodeExternals()],
-  entry: './src/index.ts',
-  devtool: 'cheap-source-map',
+  entry: './src/emails-input.ts',
+  output: {
+    filename: 'emails-input.js',
+    // Setting webpack to generate the library with a global variable as
+    // the spec of the test is suggesting
+    library: 'EmailsInput',
+    libraryTarget: 'var',
+    libraryExport: 'default',
+    globalObject: 'this',
+  },
+  devtool: 'inline-source-map',
   devServer: {
     contentBase: path.resolve(__dirname, 'dist'),
   },
@@ -15,6 +24,10 @@ module.exports = {
         test: /\.ts$/,
         use: 'ts-loader',
         exclude: '/node_modules/',
+      },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },
