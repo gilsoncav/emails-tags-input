@@ -4,7 +4,7 @@ interface EmailsInputOptions {
   /**
    * html string to be the content of the label
    */
-  labelHTMLContent: string;
+  labelHTMLContent: string | null;
   onMailsListChange: (mailsList: EmailList) => void;
 }
 
@@ -16,30 +16,45 @@ interface Email {
 type EmailList = Email[];
 
 export default class EmailsInput {
-  readonly containerNode: HTMLElement;
-  private divEmailsInput: HTMLDivElement;
-  private label: HTMLSpanElement;
   readonly options: EmailsInputOptions;
+  // Properties mapping DOM elements
+  readonly containerNode: HTMLElement;
+  private mainContainer: HTMLDivElement;
+  private label: HTMLSpanElement | null;
+  private blocksWindow: HTMLDivElement;
 
   constructor(containerNode: HTMLElement, options: EmailsInputOptions) {
     this.options = options;
     this.containerNode = containerNode;
-    this.divEmailsInput = this.renderDivEmailsInput();
-    this.label = this.renderLabel();
+    this.mainContainer = this.renderMainContainer();
+    if (this.options.labelHTMLContent !== null) {
+      this.label = this.renderLabel();
+    } else {
+      this.label = null;
+    }
+    this.blocksWindow = this.renderBlocksWindow();
   }
 
-  private renderDivEmailsInput(): HTMLDivElement {
-    const div = document.createElement('div');
-    div.className = 'gct-emails-input';
-    this.containerNode.appendChild(div);
+  private renderMainContainer(): HTMLDivElement {
+    const elem = document.createElement('div');
+    elem.className = 'gct-emails-input';
+    this.containerNode.appendChild(elem);
 
-    return div;
+    return elem;
   }
 
   private renderLabel(): HTMLSpanElement {
     const elem = document.createElement('label');
-    elem.innerHTML = this.options.labelHTMLContent;
-    this.divEmailsInput.appendChild(elem);
+    elem.innerHTML = this.options.labelHTMLContent ?? '';
+    this.mainContainer.appendChild(elem);
+
+    return elem;
+  }
+
+  private renderBlocksWindow(): HTMLDivElement {
+    const elem = document.createElement('div');
+    elem.id = 'blocks-window';
+    this.mainContainer.appendChild(elem);
 
     return elem;
   }

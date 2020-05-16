@@ -1,3 +1,7 @@
+$primary: #4262ff;
+$secondary: #c3c2cf;
+$terciary: rgba(102, 153, 255, 0.2);
+
 .gct-emails-input {
   display: flex;
   width: 100%;
@@ -13,5 +17,18 @@
   label,
   label strong {
     font-size: 20px;
+  }
+
+  #blocks-window {
+    display: flex;
+    align-content: flex-start;
+    flex: 1;
+    overflow-y: auto;
+    flex-wrap: wrap;
+    background-color: white;
+    border: 1px solid $secondary;
+    border-radius: 4px;
+    margin-top: 24px;
+    padding: 8px 7px;
   }
 }
