@@ -1,6 +1,6 @@
 $primary: #4262ff;
 $secondary: #c3c2cf;
-$terciary: rgba(102, 153, 255, 0.2);
+$tertiary: rgba(102, 153, 255, 0.2);
 
 .gct-emails-input {
   display: flex;
@@ -15,20 +15,43 @@ $terciary: rgba(102, 153, 255, 0.2);
   }
 
   label,
-  label strong {
+  label * {
     font-size: 20px;
   }
+}
 
-  #blocks-window {
-    display: flex;
-    align-content: flex-start;
-    flex: 1;
-    overflow-y: auto;
-    flex-wrap: wrap;
-    background-color: white;
-    border: 1px solid $secondary;
-    border-radius: 4px;
-    margin-top: 24px;
-    padding: 8px 7px;
-  }
+.gct-emails-input__blocks-window {
+  display: flex;
+  align-content: flex-start;
+  flex: 1;
+  overflow-y: auto;
+  flex-wrap: wrap;
+  background-color: white;
+  border: 1px solid $secondary;
+  border-radius: 4px;
+  margin-top: 24px;
+  padding: 8px 7px;
+}
+
+%gct-emails-input__block {
+  display: flex;
+  align-items: center;
+  background-color: $tertiary;
+  height: 24px;
+  font-size: 14px;
+  border-radius: 12px;
+  padding-left: 10px;
+  margin: 0 2px 4px 0;
+}
+
+.gct-emails-input__block__valid {
+  @extend %gct-emails-input__block;
+}
+
+.gct-emails-input__block__invalid {
+  @extend %gct-emails-input__block;
+  background-color: transparent;
+  border-bottom: 1px dashed #d92929;
+  border-radius: 0;
+  padding-left: 4px;
 }
