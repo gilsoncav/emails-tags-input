@@ -10,6 +10,10 @@ interface EmailsInputOptions {
 }
 
 class EmailBlock {
+  static kSVG_CLOSE_ICON = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M16 8.80571L15.1943 8L12 11.1943L8.80571 8L8 8.80571L11.1943 12L8 15.1943L8.80571 16L12 12.8057L15.1943 16L16 15.1943L12.8057 12L16 8.80571Z" fill="black"/>
+  </svg>`;
+
   // DOM mapping properties
   readonly node: HTMLElement;
   // Data properties
@@ -30,8 +34,12 @@ class EmailBlock {
     const elem = document.createElement('span');
     elem.className = 'gct-emails-input__block__';
     elem.className += !this.valid ? 'invalid' : 'valid';
-
     elem.textContent = this.address;
+
+    // Generating and appending the close icon
+    const closeIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    elem.appendChild(closeIcon);
+    closeIcon.outerHTML = EmailBlock.kSVG_CLOSE_ICON;
 
     return elem;
   }
