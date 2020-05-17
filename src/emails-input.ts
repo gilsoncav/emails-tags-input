@@ -40,7 +40,9 @@ class EmailBlock {
     closeIcon.outerHTML = EmailBlock.kSVG_CLOSE_ICON;
     this.mainContainer.appendChild(closeIconDiv);
 
-    closeIconDiv.addEventListener('click', (evt) => this._destroy());
+    closeIconDiv.addEventListener('mousedown', (evt) => {
+      this._destroy();
+    });
 
     return closeIconDiv;
   };
@@ -116,6 +118,12 @@ export default class EmailsInput {
     elem.className = 'gct-emails-input';
     this.containerNode.appendChild(elem);
 
+    elem.addEventListener('focusin', (evt) => {});
+
+    elem.addEventListener('focusout', (evt) => {
+      this._handleCreateEmailBlock(this._input.value);
+    });
+
     return elem;
   };
 
@@ -132,10 +140,6 @@ export default class EmailsInput {
     elem.className = 'gct-emails-input__blocks-window';
     this._mainContainer.appendChild(elem);
 
-    // elem.addEventListener('click', (evt) => {
-    //   this._input.focus();
-    // });
-
     return elem;
   };
 
@@ -148,12 +152,8 @@ export default class EmailsInput {
     elem.addEventListener('keypress', (evt) => {
       if (evt.key === 'Enter' || evt.key === ',') {
         evt.preventDefault();
-        this._handleCreateEmailBlock((<HTMLInputElement>evt.currentTarget).value);
+        this._handleCreateEmailBlock(this._input.value);
       }
-    });
-
-    elem.addEventListener('focusout', (evt) => {
-      this._handleCreateEmailBlock((<HTMLInputElement>evt.currentTarget).value);
     });
 
     return elem;
@@ -184,6 +184,8 @@ export default class EmailsInput {
   };
 
   private _handleDeleteEmailBlock = (emailBlockToBeDeleted: EmailBlock) => {
+    console.log('EmailsInput._handleDeleEmailBlock(...)', emailBlockToBeDeleted);
     this._removeEmailBlock(emailBlockToBeDeleted);
+    this._input.focus();
   };
 }
