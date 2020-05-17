@@ -8,6 +8,7 @@ $tertiary: rgba(102, 153, 255, 0.2);
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
+  flex: 1 1 auto;
 
   // TODO take font family as an option passed to the component
   * {
@@ -23,6 +24,7 @@ $tertiary: rgba(102, 153, 255, 0.2);
 
 .gct-emails-input__blocks-window {
   display: flex;
+  flex-direction: row;
   align-content: flex-start;
   flex: 1;
   overflow-y: auto;
@@ -36,6 +38,7 @@ $tertiary: rgba(102, 153, 255, 0.2);
 
 %gct-emails-input__block {
   display: flex;
+  flex-direction: row;
   align-items: center;
   background-color: $tertiary;
   height: 24px;

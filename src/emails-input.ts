@@ -68,9 +68,9 @@ interface EmailsInputProps {
   /**
    * html string to be the content of the label
    */
-  labelHTMLContent: string | null;
-  inputPlaceholderText: string;
-  onMailsListChange: (mailsList: EmailBlock[]) => void;
+  labelHTMLContent?: string | null;
+  inputPlaceholderText?: string;
+  onMailsListChange?: (mailsList: EmailBlock[]) => void;
 }
 
 export default class EmailsInput {
@@ -84,7 +84,10 @@ export default class EmailsInput {
   // Data properties
   private _emailList: EmailBlock[];
 
-  constructor(containerNode: HTMLElement, props: EmailsInputProps) {
+  constructor(
+    containerNode: HTMLElement,
+    props: EmailsInputProps = { inputPlaceholderText: 'add more emails...' }
+  ) {
     this.options = props;
     this._emailList = [];
     this.containerNode = containerNode;
