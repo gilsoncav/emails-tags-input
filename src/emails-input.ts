@@ -113,6 +113,18 @@ export default class EmailsInput {
     return this._emailList;
   }
 
+  get validEmailsCount() {
+    return this._emailList.filter((eB) => eB.valid).length;
+  }
+
+  get invalidEmailsCount() {
+    return this._emailList.filter((eB) => !eB.valid).length;
+  }
+
+  get emailsCount() {
+    return this._emailList.length;
+  }
+
   private _renderMainContainer = (): HTMLDivElement => {
     const elem = document.createElement('div');
     elem.className = 'gct-emails-input';

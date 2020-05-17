@@ -37,6 +37,11 @@
       );
 
       var getEmailsCountBtn = document.querySelector('#get-emails-count-btn');
+      getEmailsCountBtn.addEventListener('click', (evt) =>
+        alert(
+          `There are ${input.validEmailsCount} valid emails out of ${input.emailsCount}`
+        )
+      );
 
       function generateRandomEmail() {
         const icanns = [
