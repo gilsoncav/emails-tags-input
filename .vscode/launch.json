@@ -1,0 +1,21 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "chrome",
+      "url": "http://127.0.0.1:5500/dist/emails-input__form-example.html",
+      "webRoot": "${workspaceFolder}/dist",
+      "sourceMaps": true,
+      "trace": "verbose",
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${workspaceFolder}/src/*",
+        "webpack:///src/*": "${workspaceFolder}/src/*"
+      }
+    }
+  ]
+}
