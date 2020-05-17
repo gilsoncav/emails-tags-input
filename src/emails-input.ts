@@ -41,7 +41,7 @@ class EmailBlock {
     this.mainContainer.appendChild(closeIconDiv);
 
     closeIconDiv.addEventListener('mousedown', (evt) => {
-      this._destroy();
+      this.props.onDelete(this);
     });
 
     return closeIconDiv;
@@ -60,8 +60,7 @@ class EmailBlock {
     return elem;
   };
 
-  private _destroy = () => {
-    this.props.onDelete(this);
+  destroy = () => {
     this.mainContainer.parentNode?.removeChild(this.mainContainer);
   };
 }
@@ -84,14 +83,14 @@ export default class EmailsInput {
   private _blocksWindow: HTMLDivElement;
   private _input: HTMLInputElement;
   // Data properties
-  private _emailList: EmailBlock[];
+  private _emailBlockList: EmailBlock[];
 
   constructor(
     containerNode: HTMLElement,
     props: EmailsInputProps = { inputPlaceholderText: 'add more emails...' }
   ) {
     this.props = props;
-    this._emailList = [];
+    this._emailBlockList = [];
     this.containerNode = containerNode;
     // ATTENTION: the render methods tends to position elements in the DOM
     // and as so, the order matters. Some rendering counts on previous elements
@@ -109,20 +108,24 @@ export default class EmailsInput {
     containerNode.style.display = 'flex';
   }
 
+  get emailBlockList() {
+    return this._emailBlockList;
+  }
+
   get emailList() {
-    return this._emailList;
+    return this._emailBlockList.map((eB) => eB.address);
   }
 
   get validEmailsCount() {
-    return this._emailList.filter((eB) => eB.valid).length;
+    return this._emailBlockList.filter((eB) => eB.valid).length;
   }
 
   get invalidEmailsCount() {
-    return this._emailList.filter((eB) => !eB.valid).length;
+    return this._emailBlockList.filter((eB) => !eB.valid).length;
   }
 
   get emailsCount() {
-    return this._emailList.length;
+    return this._emailBlockList.length;
   }
 
   private _renderMainContainer = (): HTMLDivElement => {
@@ -174,14 +177,21 @@ export default class EmailsInput {
     const emailBlock = new EmailBlock(address, {
       onDelete: this._handleDeleteEmailBlock,
     });
-    this._emailList.push(emailBlock);
+    this._emailBlockList.push(emailBlock);
 
     this._input.insertAdjacentElement('beforebegin', emailBlock.mainContainer);
   };
 
-  private _removeEmailBlock(emailBlock: EmailBlock) {
-    this._emailList = this._emailList.filter((eB) => eB.address !== emailBlock.address);
-  }
+  private _removeEmailBlock = (emailBlock: EmailBlock) => {
+    this._emailBlockList = this._emailBlockList.filter(
+      (eB) => eB.address !== emailBlock.address
+    );
+    emailBlock.destroy();
+  };
+
+  removeAll = () => {
+    this._emailBlockList.forEach((eB) => this._removeEmailBlock(eB));
+  };
 
   private _handleCreateEmailBlock = (address: string) => {
     try {
@@ -192,6 +202,11 @@ export default class EmailsInput {
       // TODO insert a mechanism to just log error in dev builds
       console.log('gct-emails-input ERROR: ', e);
     }
+  };
+
+  replaceAll = (emailAddressList: string[] = []) => {
+    this.removeAll();
+    emailAddressList.forEach((address) => this._handleCreateEmailBlock(address));
   };
 
   private _handleDeleteEmailBlock = (emailBlockToBeDeleted: EmailBlock) => {
