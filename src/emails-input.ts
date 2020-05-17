@@ -21,6 +21,9 @@ class EmailBlock {
   readonly valid: boolean;
 
   constructor(address: string) {
+    if (address === '') {
+      throw new Error('cannot create a EmailBlock with an empty email address');
+    }
     this.address = address;
     this.valid = this.validateEmail(address);
     this.node = this.render();
@@ -106,26 +109,37 @@ export default class EmailsInput {
   private renderInput(): HTMLInputElement {
     const elem = document.createElement('input');
     elem.id = 'input';
-    elem.type = 'email';
+    elem.type = 'text';
     elem.placeholder = this.options.inputPlaceholderText;
     this._blocksWindow.appendChild(elem);
     elem.addEventListener('keypress', (evt) => {
-      if (evt.key === 'Enter') {
+      console.log('EmailsInput.renderInput() evt.key= ', evt.key);
+      if (evt.key === 'Enter' || evt.key === ',') {
         evt.preventDefault();
         this.handleCreateEmailBlock((<HTMLInputElement>evt.currentTarget).value);
       }
+    });
+
+    elem.addEventListener('focusout', (evt) => {
+      this.handleCreateEmailBlock((<HTMLInputElement>evt.currentTarget).value);
     });
 
     return elem;
   }
 
   addEmailBlock(address: string) {
-    const emailBlock = new EmailBlock(address);
+    try {
+      const emailBlock = new EmailBlock(address);
 
-    this._input.insertAdjacentElement('beforebegin', emailBlock.node);
+      this._input.insertAdjacentElement('beforebegin', emailBlock.node);
+    } catch (e) {
+      // TODO insert a mechanism to just log error in dev builds
+      console.log('gct-emails-input ERROR: ', e);
+    }
   }
 
   handleCreateEmailBlock(address: string) {
     this.addEmailBlock(address);
+    this._input.value = '';
   }
 }
