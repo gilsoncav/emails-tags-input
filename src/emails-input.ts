@@ -69,12 +69,12 @@ interface EmailsInputProps {
    * html string to be the content of the label
    */
   labelHTMLContent?: string | null;
-  inputPlaceholderText?: string;
+  inputPlaceholderText: string;
   onMailsListChange?: (mailsList: EmailBlock[]) => void;
 }
 
 export default class EmailsInput {
-  readonly options: EmailsInputProps;
+  readonly props: EmailsInputProps;
   // Properties mapping DOM elements
   readonly containerNode: HTMLElement;
   private _mainContainer: HTMLDivElement;
@@ -88,20 +88,23 @@ export default class EmailsInput {
     containerNode: HTMLElement,
     props: EmailsInputProps = { inputPlaceholderText: 'add more emails...' }
   ) {
-    this.options = props;
+    this.props = props;
     this._emailList = [];
     this.containerNode = containerNode;
     // ATTENTION: the render methods tends to position elements in the DOM
     // and as so, the order matters. Some rendering counts on previous elements
     // being already in place.
     this._mainContainer = this._renderMainContainer();
-    if (this.options.labelHTMLContent !== null) {
+    if (this.props.labelHTMLContent !== null) {
       this._label = this._renderLabel();
     } else {
       this._label = null;
     }
     this._blocksWindow = this._renderBlocksWindow();
     this._input = this._renderInput();
+
+    // Making sure that the node passed to be the mounting point has a flex display mode set
+    containerNode.style.display = 'flex';
   }
 
   get emailList() {
@@ -118,7 +121,7 @@ export default class EmailsInput {
 
   private _renderLabel = (): HTMLSpanElement => {
     const elem = document.createElement('label');
-    elem.innerHTML = this.options.labelHTMLContent ?? '';
+    elem.innerHTML = this.props.labelHTMLContent ?? '';
     this._mainContainer.appendChild(elem);
 
     return elem;
@@ -140,7 +143,7 @@ export default class EmailsInput {
     const elem = document.createElement('input');
     elem.id = 'input';
     elem.type = 'text';
-    elem.placeholder = this.options.inputPlaceholderText;
+    elem.placeholder = this.props.inputPlaceholderText;
     this._blocksWindow.appendChild(elem);
     elem.addEventListener('keypress', (evt) => {
       if (evt.key === 'Enter' || evt.key === ',') {
