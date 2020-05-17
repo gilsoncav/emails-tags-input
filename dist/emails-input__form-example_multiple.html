@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test bed for Emails Tag Vanilla JS component</title>
+    <link href="emails-input__form-example_multiple.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <form>
+      <div id="form-frame">
+        <div id="form-body">
+          <div id="emails-input1" class="emails-input"></div>
+          <div id="emails-input2" class="emails-input"></div>
+        </div>
+        <div id="form-footer">
+          <button id="add-email-btn" type="button">Add email</button>
+          <button id="get-emails-count-btn" type="button">Get emails count</button>
+        </div>
+      </div>
+    </form>
+    <script src="./emails-input.js"></script>
+    <script>
+      var options = {
+        labelHTMLContent: 'Share <strong>Board Name</strong> with others',
+        inputPlaceholderText: 'add more people...',
+      };
+      var inputContainerNode = document.querySelector('#emails-input1');
+      var input = new EmailsInput(inputContainerNode, { ...options });
+      // Handling Add email and Get emails count buttons, etc.
+      var addEmailBtn = document.querySelector('#add-email-btn');
+      addEmailBtn.addEventListener('click', (evt) =>
+        input.addEmailBlock(generateRandomEmail())
+      );
+
+      var getEmailsCountBtn = document.querySelector('#get-emails-count-btn');
+      getEmailsCountBtn.addEventListener('click', (evt) =>
+        alert(
+          `There are ${input.validEmailsCount} valid emails out of ${input.emailsCount}`
+        )
+      );
+
+      // Adding a new custom emails input field
+      var inputContainerNode2 = document.querySelector('#emails-input2');
+      var input2 = new EmailsInput(inputContainerNode2, {
+        ...options,
+        labelHTMLContent: 'New field to <strong>test<strong> multiple use',
+      });
+
+      function generateRandomEmail() {
+        const icanns = [
+          '.com',
+          '.ac',
+          '.ac.uk',
+          '.ac.in',
+          '.ac.id',
+          '.الجزائر',
+          '.dz',
+          '.baby',
+          '.cab',
+          '.dad',
+          '.earth',
+          '.fail',
+          '.gallery',
+          '.hair',
+          '.ice',
+          '.jewelry',
+          '.kim',
+          '.land',
+          '.makeup',
+          '.name',
+          '.observer',
+          '.page',
+          '.qpon',
+          '.racing',
+          '.safe',
+          '.talk',
+          '.uconnect',
+          '.vacations',
+          '.wang',
+          '.xxx',
+          '.yachts',
+          '.zero',
+          '.ren',
+          '.arte',
+          '.berlin',
+          '.desi',
+          '.casa',
+          '.bom',
+          '.abogado',
+          '.موقع',
+          '.在线',
+          '.дети',
+          '.संगठन',
+          '.africa',
+          '.abudhabi',
+          '.alsace',
+          '.boston',
+          '.kiwi',
+          '.lat',
+          '.佛山',
+          '.example',
+          '.app',
+          '.bar',
+          '.bible',
+          '.biz',
+          '.cern',
+          '.church',
+          '.cloud',
+          '.club',
+          '.college',
+          '.com',
+          '.design',
+          '.dev',
+          '.eco',
+          '.hiv',
+          '.info',
+          '.kaufen',
+          '.kiwi',
+          '.lat',
+          '.lgbt',
+          '.name',
+          '.mobi',
+          '.moe',
+          '.net',
+          '.ngo',
+          '.one',
+          '.ong',
+          '.ooo',
+          '.org',
+          '.pro',
+          '.shop',
+          '.wiki',
+          '.wtf',
+          '.xyz',
+          '.eng',
+          '.sic',
+        ];
+
+        const preAt = genRandomString(2, 6);
+        const postAt = genRandomString(3, 7);
+        const rootDomain = icanns[Math.floor(Math.random() * icanns.length)];
+
+        return preAt + '@' + postAt + rootDomain;
+      }
+
+      function genRandomString(minSize, maxSize) {
+        const alphaNums = '0123456789abcdefghijklmnopqrstuvwxyz';
+
+        let size = minSize + Math.floor(Math.random() * maxSize + 1);
+        let gen = '';
+        for (let i = 0; i < size; i++) {
+          gen += alphaNums.charAt(Math.floor(Math.random() * alphaNums.length));
+        }
+
+        return gen;
+      }
+    </script>
+  </body>
+</html>

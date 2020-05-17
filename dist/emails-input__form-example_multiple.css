@@ -1,0 +1,59 @@
+div {
+  box-sizing: border-box;
+}
+
+#form-frame {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  background-color: #f8f8f7;
+  justify-content: space-between;
+  width: 540px;
+  height: 700px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+#form-body {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#form-body .emails-input {
+  padding: 32px 50px 24px 50px;
+  flex: 1;
+}
+
+#form-footer {
+  display: flex;
+  align-items: flex-end;
+  min-height: 96px;
+  background-color: white;
+  border-radius: 0 8px 8px 0;
+  padding: 0 50px 32px 50px;
+}
+
+/* TODO eliminate default focus ring blue outline of the buttons */
+#form-footer > button {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  height: 40px;
+  padding: 8px 16px;
+  margin-right: 16px;
+  border-radius: 6px;
+  background-color: #4262ff;
+  color: white;
+}
+
+.emails-input {
+  display: flex;
+  flex-direction: column;
+  /* TODO set programatically min-height in all parent divs of the component */
+  min-height: 0;
+}
+
+#emails-input2 {
+  max-height: 250px;
+}

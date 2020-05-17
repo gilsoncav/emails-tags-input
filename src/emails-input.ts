@@ -157,7 +157,6 @@ export default class EmailsInput {
 
   private _renderInput = (): HTMLInputElement => {
     const elem = document.createElement('input');
-    elem.id = 'input';
     elem.type = 'text';
     elem.placeholder = this.props.inputPlaceholderText;
     this._blocksWindow.appendChild(elem);
@@ -172,17 +171,12 @@ export default class EmailsInput {
   };
 
   addEmailBlock = (address: string) => {
-    try {
-      const emailBlock = new EmailBlock(address, {
-        onDelete: this._handleDeleteEmailBlock,
-      });
-      this._emailList.push(emailBlock);
+    const emailBlock = new EmailBlock(address, {
+      onDelete: this._handleDeleteEmailBlock,
+    });
+    this._emailList.push(emailBlock);
 
-      this._input.insertAdjacentElement('beforebegin', emailBlock.mainContainer);
-    } catch (e) {
-      // TODO insert a mechanism to just log error in dev builds
-      console.log('gct-emails-input ERROR: ', e);
-    }
+    this._input.insertAdjacentElement('beforebegin', emailBlock.mainContainer);
   };
 
   private _removeEmailBlock(emailBlock: EmailBlock) {
@@ -190,9 +184,14 @@ export default class EmailsInput {
   }
 
   private _handleCreateEmailBlock = (address: string) => {
-    this.addEmailBlock(address);
-    this._input.value = '';
-    this._input.focus();
+    try {
+      this.addEmailBlock(address);
+      this._input.value = '';
+      this._input.focus();
+    } catch (e) {
+      // TODO insert a mechanism to just log error in dev builds
+      console.log('gct-emails-input ERROR: ', e);
+    }
   };
 
   private _handleDeleteEmailBlock = (emailBlockToBeDeleted: EmailBlock) => {
