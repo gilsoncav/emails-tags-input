@@ -1,12 +1,7 @@
 import './styles/emails-input.scss';
 
-interface EmailsInputOptions {
-  /**
-   * html string to be the content of the label
-   */
-  labelHTMLContent: string | null;
-  inputPlaceholderText: string;
-  onMailsListChange: (mailsList: EmailBlock[]) => void;
+interface EmailBlockProps {
+  onDelete: (emailBlockToBeDeleted: EmailBlock) => void;
 }
 
 class EmailBlock {
@@ -15,43 +10,71 @@ class EmailBlock {
   </svg>`;
 
   // DOM mapping properties
-  readonly node: HTMLElement;
+  readonly mainContainer: HTMLElement;
+  private readonly _closeIconDiv: HTMLDivElement;
   // Data properties
   readonly address: string;
   readonly valid: boolean;
+  readonly props: EmailBlockProps;
 
-  constructor(address: string) {
+  constructor(address: string, props: EmailBlockProps) {
+    this.props = props;
     if (address === '') {
       throw new Error('cannot create a EmailBlock with an empty email address');
     }
     this.address = address;
-    this.valid = this.validateEmail(address);
-    this.node = this.render();
+    this.valid = this._validateEmail(address);
+    this.mainContainer = this._renderMainContainer();
+    this._closeIconDiv = this._renderCloseIconDiv();
   }
 
-  private validateEmail(address: string): boolean {
+  private _validateEmail = (address: string): boolean => {
     return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(this.address);
-  }
+  };
 
-  private render(): HTMLElement {
-    const elem = document.createElement('span');
+  private _renderCloseIconDiv = (): HTMLDivElement => {
+    // Generating and appending the close icon
+    const closeIconDiv = document.createElement('div');
+    const closeIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    closeIconDiv.appendChild(closeIcon);
+    closeIcon.outerHTML = EmailBlock.kSVG_CLOSE_ICON;
+    this.mainContainer.appendChild(closeIconDiv);
+
+    closeIconDiv.addEventListener('click', (evt) => this._destroy());
+
+    return closeIconDiv;
+  };
+
+  private _renderMainContainer = (): HTMLElement => {
+    const elem = document.createElement('div');
     elem.className = 'gct-emails-input__block__';
     elem.className += !this.valid ? 'invalid' : 'valid';
-    elem.textContent = this.address;
 
-    // Generating and appending the close icon
-    const closeIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    elem.appendChild(closeIcon);
-    closeIcon.outerHTML = EmailBlock.kSVG_CLOSE_ICON;
+    const span = document.createElement('span');
+    span.textContent = this.address;
+
+    elem.appendChild(span);
 
     return elem;
-  }
+  };
 
-  //TODO implement a destroy method to remove itself from DOM
+  private _destroy = () => {
+    this.props.onDelete(this);
+    this.mainContainer.parentNode?.removeChild(this.mainContainer);
+  };
+}
+
+interface EmailsInputProps {
+  /**
+   * html string to be the content of the label
+   */
+  labelHTMLContent: string | null;
+  inputPlaceholderText: string;
+  onMailsListChange: (mailsList: EmailBlock[]) => void;
 }
 
 export default class EmailsInput {
-  readonly options: EmailsInputOptions;
+  readonly options: EmailsInputProps;
   // Properties mapping DOM elements
   readonly containerNode: HTMLElement;
   private _mainContainer: HTMLDivElement;
@@ -61,90 +84,100 @@ export default class EmailsInput {
   // Data properties
   private _emailList: EmailBlock[];
 
-  constructor(containerNode: HTMLElement, options: EmailsInputOptions) {
-    this.options = options;
+  constructor(containerNode: HTMLElement, props: EmailsInputProps) {
+    this.options = props;
     this._emailList = [];
     this.containerNode = containerNode;
     // ATTENTION: the render methods tends to position elements in the DOM
     // and as so, the order matters. Some rendering counts on previous elements
     // being already in place.
-    this._mainContainer = this.renderMainContainer();
+    this._mainContainer = this._renderMainContainer();
     if (this.options.labelHTMLContent !== null) {
-      this._label = this.renderLabel();
+      this._label = this._renderLabel();
     } else {
       this._label = null;
     }
-    this._blocksWindow = this.renderBlocksWindow();
-    this._input = this.renderInput();
+    this._blocksWindow = this._renderBlocksWindow();
+    this._input = this._renderInput();
   }
 
   get emailList() {
     return this._emailList;
   }
 
-  private renderMainContainer(): HTMLDivElement {
+  private _renderMainContainer = (): HTMLDivElement => {
     const elem = document.createElement('div');
     elem.className = 'gct-emails-input';
     this.containerNode.appendChild(elem);
 
     return elem;
-  }
+  };
 
-  private renderLabel(): HTMLSpanElement {
+  private _renderLabel = (): HTMLSpanElement => {
     const elem = document.createElement('label');
     elem.innerHTML = this.options.labelHTMLContent ?? '';
     this._mainContainer.appendChild(elem);
 
     return elem;
-  }
+  };
 
-  private renderBlocksWindow(): HTMLDivElement {
+  private _renderBlocksWindow = (): HTMLDivElement => {
     const elem = document.createElement('div');
     elem.className = 'gct-emails-input__blocks-window';
     this._mainContainer.appendChild(elem);
 
-    elem.addEventListener('click', (evt) => {
-      this._input.focus();
-    });
+    // elem.addEventListener('click', (evt) => {
+    //   this._input.focus();
+    // });
 
     return elem;
-  }
+  };
 
-  private renderInput(): HTMLInputElement {
+  private _renderInput = (): HTMLInputElement => {
     const elem = document.createElement('input');
     elem.id = 'input';
     elem.type = 'text';
     elem.placeholder = this.options.inputPlaceholderText;
     this._blocksWindow.appendChild(elem);
     elem.addEventListener('keypress', (evt) => {
-      console.log('EmailsInput.renderInput() evt.key= ', evt.key);
       if (evt.key === 'Enter' || evt.key === ',') {
         evt.preventDefault();
-        this.handleCreateEmailBlock((<HTMLInputElement>evt.currentTarget).value);
+        this._handleCreateEmailBlock((<HTMLInputElement>evt.currentTarget).value);
       }
     });
 
     elem.addEventListener('focusout', (evt) => {
-      this.handleCreateEmailBlock((<HTMLInputElement>evt.currentTarget).value);
+      this._handleCreateEmailBlock((<HTMLInputElement>evt.currentTarget).value);
     });
 
     return elem;
-  }
+  };
 
-  addEmailBlock(address: string) {
+  addEmailBlock = (address: string) => {
     try {
-      const emailBlock = new EmailBlock(address);
+      const emailBlock = new EmailBlock(address, {
+        onDelete: this._handleDeleteEmailBlock,
+      });
+      this._emailList.push(emailBlock);
 
-      this._input.insertAdjacentElement('beforebegin', emailBlock.node);
+      this._input.insertAdjacentElement('beforebegin', emailBlock.mainContainer);
     } catch (e) {
       // TODO insert a mechanism to just log error in dev builds
       console.log('gct-emails-input ERROR: ', e);
     }
+  };
+
+  private _removeEmailBlock(emailBlock: EmailBlock) {
+    this._emailList = this._emailList.filter((eB) => eB.address !== emailBlock.address);
   }
 
-  handleCreateEmailBlock(address: string) {
+  private _handleCreateEmailBlock = (address: string) => {
     this.addEmailBlock(address);
     this._input.value = '';
     this._input.focus();
-  }
+  };
+
+  private _handleDeleteEmailBlock = (emailBlockToBeDeleted: EmailBlock) => {
+    this._removeEmailBlock(emailBlockToBeDeleted);
+  };
 }
