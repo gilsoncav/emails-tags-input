@@ -105,7 +105,7 @@ export default class EmailsInput {
     elem.placeholder = this.props.inputPlaceholderText;
     this._blocksWindow.appendChild(elem);
 
-    elem.addEventListener('keypress', (evt) => {
+    elem.addEventListener('keydown', (evt) => {
       if (evt.key === 'Enter' || evt.key === ',') {
         evt.preventDefault();
         this._handleCreateEmailBlock(this._input.value, true);
