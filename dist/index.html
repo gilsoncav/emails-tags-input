@@ -43,7 +43,7 @@
         },
       };
       var inputContainerNode = document.querySelector('#emails-input');
-      var input = new EmailsInput(inputContainerNode, { ...options });
+      var input = new EmailsInput(inputContainerNode, options);
       // Handling Add email and Get emails count buttons, etc.
       var addEmailBtn = document.querySelector('#add-email-btn');
       addEmailBtn.addEventListener('click', (evt) =>
