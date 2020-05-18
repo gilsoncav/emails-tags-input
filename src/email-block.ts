@@ -1,7 +1,7 @@
 import './styles/emails-input.scss';
 
 export interface EmailBlockProps {
-  onDelete: (emailBlockToBeDeleted: EmailBlock) => void;
+  onDelete: (emailBlockToBeDeleted: EmailBlock, notifyChange: boolean) => void;
 }
 
 export class EmailBlock {
@@ -41,7 +41,7 @@ export class EmailBlock {
     this.mainContainer.appendChild(closeIconDiv);
 
     closeIconDiv.addEventListener('mousedown', (evt) => {
-      this.props.onDelete(this);
+      this.props.onDelete(this, true);
     });
 
     return closeIconDiv;

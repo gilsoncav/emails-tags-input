@@ -72,7 +72,7 @@ export default class EmailsInput {
     elem.addEventListener('focusin', (evt) => {});
 
     elem.addEventListener('focusout', (evt) => {
-      this._handleCreateEmailBlock(this._input.value);
+      this._handleCreateEmailBlock(this._input.value, true);
     });
 
     return elem;
@@ -102,14 +102,21 @@ export default class EmailsInput {
     elem.addEventListener('keypress', (evt) => {
       if (evt.key === 'Enter' || evt.key === ',') {
         evt.preventDefault();
-        this._handleCreateEmailBlock(this._input.value);
+        this._handleCreateEmailBlock(this._input.value, true);
       }
     });
 
     return elem;
   };
 
-  addEmailBlock = (address: string) => {
+  /**
+   * Add a single new email by the address
+   */
+  addEmail = (address: string) => {
+    this._handleCreateEmailBlock(address, true);
+  };
+
+  private _addEmailBlock = (address: string) => {
     const emailBlock = new EmailBlock(address, {
       onDelete: this._handleDeleteEmailBlock,
     });
@@ -125,29 +132,50 @@ export default class EmailsInput {
     emailBlock.destroy();
   };
 
+  /**
+   * Removes all the current emails and cleans the component
+   */
   removeAll = () => {
-    this._emailBlockList.forEach((eB) => this._removeEmailBlock(eB));
+    this._emailBlockList.forEach((eB) => this._handleDeleteEmailBlock(eB, false));
   };
 
-  private _handleCreateEmailBlock = (address: string) => {
+  /**
+   * Internal state altering handler
+   *
+   * TODO can improve to observe the 'source of truth' that is the data property instead of handlers
+   */
+  private _handleCreateEmailBlock = (address: string, notifyObserver: boolean) => {
     try {
-      this.addEmailBlock(address);
+      this._addEmailBlock(address);
       this._input.value = '';
       this._input.focus();
+      if (notifyObserver && this.props.onMailsListChange)
+        this.props.onMailsListChange(this.emailBlockList);
     } catch (e) {
       // TODO insert a mechanism to just log error in dev builds
-      console.log('gct-emails-input ERROR: ', e);
     }
   };
 
+  /**
+   * Replace the current email list with the provided list of new email addresses
+   */
   replaceAll = (emailAddressList: string[] = []) => {
     this.removeAll();
-    emailAddressList.forEach((address) => this._handleCreateEmailBlock(address));
+    emailAddressList.forEach((address) => this._handleCreateEmailBlock(address, false));
   };
 
-  private _handleDeleteEmailBlock = (emailBlockToBeDeleted: EmailBlock) => {
-    console.log('EmailsInput._handleDeleEmailBlock(...)', emailBlockToBeDeleted);
+  /**
+   * Internal state altering handler
+   *
+   * TODO can improve to observe the 'source of truth' that is the data property instead of handlers
+   */
+  private _handleDeleteEmailBlock = (
+    emailBlockToBeDeleted: EmailBlock,
+    notifyObserver: boolean
+  ) => {
     this._removeEmailBlock(emailBlockToBeDeleted);
     this._input.focus();
+    if (notifyObserver && this.props.onMailsListChange)
+      this.props.onMailsListChange(this.emailBlockList);
   };
 }
