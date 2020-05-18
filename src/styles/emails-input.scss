@@ -2,6 +2,8 @@ $primary: #4262ff;
 $secondary: #c3c2cf;
 $tertiary: rgba(102, 153, 255, 0.2);
 
+$inputTextHeight: 24px;
+
 .gct-emails-input {
   display: flex;
   width: 100%;
@@ -36,16 +38,20 @@ $tertiary: rgba(102, 153, 255, 0.2);
   padding: 8px 7px;
 }
 
-%gct-emails-input__block {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  background-color: $tertiary;
-  height: 24px;
+%blocks-window__items {
+  height: $inputTextHeight;
   font-size: 14px;
   border-radius: 12px;
   padding-left: 10px;
   margin: 0 6px 4px 0;
+}
+
+%gct-emails-input__block {
+  @extend %blocks-window__items;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: $tertiary;
 
   div {
     display: flex;
@@ -62,4 +68,16 @@ $tertiary: rgba(102, 153, 255, 0.2);
   border-bottom: 1px dashed #d92929;
   border-radius: 0;
   padding-left: 4px;
+}
+
+.gct-emails-input__input-text {
+  @extend %blocks-window__items;
+  border: none;
+  outline: none;
+}
+
+.gct-emails-input__input-text:focus {
+  border-radius: 4px;
+  border-left: 1px solid $primary;
+  border-right: 1px solid $primary;
 }

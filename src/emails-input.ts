@@ -100,6 +100,7 @@ export default class EmailsInput {
 
   private _renderInput = (): HTMLInputElement => {
     const elem = document.createElement('input');
+    elem.className = 'gct-emails-input__input-text';
     elem.type = 'text';
     elem.placeholder = this.props.inputPlaceholderText;
     this._blocksWindow.appendChild(elem);
