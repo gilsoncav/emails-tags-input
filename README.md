@@ -24,7 +24,7 @@ An experiment towards a "vanilla" web component with Typescript + webpack ie11 c
 
 [Link to the single sample](https://gilsoncav.github.io/emails-tags-input/dist/index.html)
 
-[Link to the multiple component sample!](https://gilsoncav.github.io/emails-tags-input/dist/emails-input__form-example_multiple.html)
+[Link to the multiple component sample](https://gilsoncav.github.io/emails-tags-input/dist/emails-input__form-example_multiple.html)
 
 # API draft:
 
@@ -37,6 +37,7 @@ Put the compiled file found in `/dist/emails-input.js` reachable to your html fi
 You'll have to construct the `EmailsInput` object passing the "mounting node" (the HTML element you pretend to mount the component on):
 
 ```javascript
+    (...)
     <script src="./emails-input.js"></script>
     <script>
       var options = {
@@ -52,6 +53,7 @@ You'll have to construct the `EmailsInput` object passing the "mounting node" (t
       };
       var inputContainerNode = document.querySelector('#emails-input');
       var input = new EmailsInput(inputContainerNode, { ...options });
+      (...)
 ```
 
 ## GLOSSARY
