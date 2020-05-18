@@ -91,6 +91,10 @@ export default class EmailsInput {
     elem.className = 'gct-emails-input__blocks-window';
     this._mainContainer.appendChild(elem);
 
+    elem.addEventListener('click', (evt) => {
+      this._input.focus();
+    });
+
     return elem;
   };
 
