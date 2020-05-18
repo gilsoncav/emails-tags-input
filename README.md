@@ -4,7 +4,7 @@
 
 An experiment towards a "vanilla" web component with Typescript + webpack ie11 compatible
 
-# Features
+# Features & Tasks
 
 - [x] Clipboard pasting - pastes comma separated text as emails
 - [x] Email block should be created by pressing Enter, entering comma, or by losing focus on the input field. A Block can be deleted.
@@ -15,6 +15,8 @@ An experiment towards a "vanilla" web component with Typescript + webpack ie11 c
 - [x] Isolated component: can use multiple in the same form
 - [x] Styling with SASS
 - [x] A prop to attach a listener to the list change events `onMailsListChange`
+- [ ] Fix - SVG fix in IE11
+- [ ] Fix - IE11 event listener for adding a new email not working properly
 
 # The compiled component is a complete vanilla JS with cool features
 
