@@ -1,5 +1,8 @@
+body,
 div {
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 #form-frame {
@@ -28,6 +31,7 @@ div {
 
 #form-footer {
   display: flex;
+  flex-direction: row;
   align-items: flex-end;
   min-height: 96px;
   background-color: white;
@@ -52,4 +56,11 @@ div {
   flex-direction: column;
   /* TODO set programatically min-height in all parent divs of the component */
   min-height: 0;
+}
+
+.link-to-version {
+  padding: 10px 20px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+  align-self: center;
 }
