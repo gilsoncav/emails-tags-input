@@ -16,15 +16,15 @@ An experiment towards a "vanilla" web component with Typescript + webpack ie11 c
 - [x] Styling with SASS
 - [x] A prop to attach a listener to the list change events `onMailsListChange`
 
-# The compiled component is a complete vanilla JS file to add multiple emails
+# The compiled component is a complete vanilla JS with cool features
 
 ![gct-emails-input screen capture](./src/assets/capture2020-05-18-01.gif)
 
 # Live Examples:
 
-[Link to the single sample]('./dist/index.html')
+[Link to the single sample](/dist/index.html)
 
-[Link to the multiple component sample!]('./dist/emails-input__form-example_multiple.html')
+[Link to the multiple component sample!](/dist/emails-input__form-example_multiple.html)
 
 # API draft:
 
