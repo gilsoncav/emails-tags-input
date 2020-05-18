@@ -1,6 +1,6 @@
 # EmailsInput component
 
-### author: Gilson Cavalcanti (thanks to miro.com)
+### author: Gilson Cavalcanti 
 
 An experiment towards a "vanilla" web component with Typescript + webpack ie11 compatible
 
@@ -20,7 +20,7 @@ An experiment towards a "vanilla" web component with Typescript + webpack ie11 c
 
 # The compiled component is a complete vanilla JS with cool features
 
-![gct-emails-input screen capture](./src/assets/capture2020-05-18-01.gif)
+![GIF gct-emails-input screen capture showcasing cool features](/src/assets/2020-05-18-cool-features.gif)
 
 # Live Examples:
 
@@ -58,9 +58,23 @@ You'll have to construct the `EmailsInput` object passing the "mounting node" (t
       (...)
 ```
 
+# Features overview
+
+| Copy & Pasting emails from clipboard                                                      | Email validation visual cue                                           |
+| ----------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| ![Image copying and pasting from clipboard](src/assets/2020-05-18-copy-paste-feature.gif) | ![GIF validation email feature](src/assets/2020-05-18-validation.gif) |
+
+
+| Typescript OOP Inner Guts                                                                        | Email validation visual cue                                                     |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- |
+| ![GIF showcasing typescript code architecture](/src/assets/2020-05-18-typescript-inner-guts.gif) | ![GIF showcasing natural focusing](/src/assets/2020-05-18-natural-focusing.gif) |
+
 ## GLOSSARY
 
 ### gct
 
 You will stumble many times in this project with a "gct" namespace or prefix.
 GCT stands for "Gilson Cavalcanti Technology" a ficiticious company that is runned me, myself and i
+
+### Email Block
+It's how we're calling the visual chip that represents the added email. 
