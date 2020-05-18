@@ -22,9 +22,9 @@ An experiment towards a "vanilla" web component with Typescript + webpack ie11 c
 
 # Live Examples:
 
-[Link to the single sample](/dist/index.html)
+[Link to the single sample](https://gilsoncav.github.io/emails-tags-input/dist/index.html)
 
-[Link to the multiple component sample!](/dist/emails-input__form-example_multiple.html)
+[Link to the multiple component sample!](https://gilsoncav.github.io/emails-tags-input/dist/emails-input__form-example_multiple.html)
 
 # API draft:
 
