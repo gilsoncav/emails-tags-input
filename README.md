@@ -1,8 +1,8 @@
-# EmailsInput component
+# EmailsInput - A compiled Vanilla JS component with ZERO imports 
 
 ### author: Gilson Cavalcanti 
 
-An experiment towards a "vanilla" web component with Typescript + webpack ie11 compatible
+An experiment towards a "vanilla" web component with Typescript + webpack ie11 compatible. The challenge involved **0% imports of existing external libs**. 🤯
 
 # Features & Tasks
 
