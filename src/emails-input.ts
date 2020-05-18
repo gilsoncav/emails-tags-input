@@ -99,14 +99,34 @@ export default class EmailsInput {
     elem.type = 'text';
     elem.placeholder = this.props.inputPlaceholderText;
     this._blocksWindow.appendChild(elem);
+
     elem.addEventListener('keypress', (evt) => {
       if (evt.key === 'Enter' || evt.key === ',') {
         evt.preventDefault();
         this._handleCreateEmailBlock(this._input.value, true);
       }
     });
+    elem.addEventListener('paste', (evt) => {
+      const rawText = evt.clipboardData?.getData('text');
+      const tokens = this._tokensFromRawText(rawText ?? '');
+
+      this.addAll(tokens);
+      evt.preventDefault();
+    });
 
     return elem;
+  };
+
+  private _tokensFromRawText = (rawText: string) => {
+    const regex = /[, ]*([\w@\.]+)[, ]*/g;
+    const tokens = [];
+    let execResult;
+
+    while ((execResult = regex.exec(rawText)) !== null) {
+      tokens.push(execResult[1]);
+    }
+
+    return tokens;
   };
 
   /**
@@ -137,6 +157,7 @@ export default class EmailsInput {
    */
   removeAll = () => {
     this._emailBlockList.forEach((eB) => this._handleDeleteEmailBlock(eB, false));
+    if (this.props.onMailsListChange) this.props.onMailsListChange(this._emailBlockList);
   };
 
   /**
@@ -162,6 +183,12 @@ export default class EmailsInput {
   replaceAll = (emailAddressList: string[] = []) => {
     this.removeAll();
     emailAddressList.forEach((address) => this._handleCreateEmailBlock(address, false));
+    if (this.props.onMailsListChange) this.props.onMailsListChange(this._emailBlockList);
+  };
+
+  addAll = (emailAddressList: string[] = []) => {
+    emailAddressList.forEach((address) => this._handleCreateEmailBlock(address, false));
+    if (this.props.onMailsListChange) this.props.onMailsListChange(this._emailBlockList);
   };
 
   /**
