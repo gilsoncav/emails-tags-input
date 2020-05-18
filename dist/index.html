@@ -55,7 +55,10 @@
       var getEmailsCountBtn = document.querySelector('#get-emails-count-btn');
       getEmailsCountBtn.addEventListener('click', function (evt) {
         alert(
-          `There are ${input.validEmailsCount} valid emails out of ${input.emailsCount}`
+          'There are ' +
+            input.validEmailsCount +
+            ' valid emails out of ' +
+            input.emailsCount
         );
       });
 
