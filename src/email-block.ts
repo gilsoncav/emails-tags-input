@@ -35,9 +35,11 @@ export class EmailBlock {
   private _renderCloseIconDiv = (): HTMLDivElement => {
     // Generating and appending the close icon
     const closeIconDiv = document.createElement('div');
-    const closeIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    // const closeIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    const closeIcon = document.createElement('svg');
+    closeIcon.innerHTML = EmailBlock.kSVG_CLOSE_ICON;
     closeIconDiv.appendChild(closeIcon);
-    closeIcon.outerHTML = EmailBlock.kSVG_CLOSE_ICON;
+    closeIconDiv.style.display = 'flex';
     this.mainContainer.appendChild(closeIconDiv);
 
     closeIconDiv.addEventListener('mousedown', (evt) => {

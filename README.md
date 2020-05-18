@@ -15,8 +15,8 @@ An experiment towards a "vanilla" web component with Typescript + webpack ie11 c
 - [x] Isolated component: can use multiple in the same form
 - [x] Styling with SASS
 - [x] A prop to attach a listener to the list change events `onMailsListChange`
-- [ ] Fix - SVG fix in IE11
-- [ ] Fix - IE11 event listener for adding a new email not working properly
+- [x] Fix - SVG fix in IE11
+- [x] Fix - IE11 event listener for adding a new email not working properly
 
 # The compiled component is a complete vanilla JS with cool features
 
