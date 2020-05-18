@@ -35,27 +35,29 @@
         labelHTMLContent: 'Share <strong>Board Name</strong> with others',
         inputPlaceholderText: 'add more people...',
         // subscribing to changes
-        onMailsListChange: (mailsBlockList) => {
+        onMailsListChange: function (mailsBlockList) {
           console.log(
             'This is how i listen to changes in the gct-emails-input component...'
           );
-          mailsBlockList.forEach((eB) => console.log(eB.address));
+          mailsBlockList.forEach(function (eB) {
+            console.log(eB.address);
+          });
         },
       };
       var inputContainerNode = document.querySelector('#emails-input');
       var input = new EmailsInput(inputContainerNode, options);
       // Handling Add email and Get emails count buttons, etc.
       var addEmailBtn = document.querySelector('#add-email-btn');
-      addEmailBtn.addEventListener('click', (evt) =>
-        input.addEmail(generateRandomEmail())
-      );
+      addEmailBtn.addEventListener('click', function (evt) {
+        input.addEmail(generateRandomEmail());
+      });
 
       var getEmailsCountBtn = document.querySelector('#get-emails-count-btn');
-      getEmailsCountBtn.addEventListener('click', (evt) =>
+      getEmailsCountBtn.addEventListener('click', function (evt) {
         alert(
           `There are ${input.validEmailsCount} valid emails out of ${input.emailsCount}`
-        )
-      );
+        );
+      });
 
       function generateRandomEmail() {
         const icanns = [
