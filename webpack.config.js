@@ -1,5 +1,6 @@
 const nodeExternals = require('webpack-node-externals');
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -16,6 +17,11 @@ module.exports = {
     globalObject: 'this',
     path: path.resolve(__dirname, 'dist'),
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
+  ],
   devtool: 'source-map',
   // devServer: {
   //   contentBase: path.resolve(__dirname, 'dist'),
