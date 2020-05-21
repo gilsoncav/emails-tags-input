@@ -2,7 +2,6 @@
   "name": "emails-tags-input",
   "version": "0.0.1",
   "description": "An experiment towards a \"vanilla\" web component with Typescript + webpack ie11",
-  "main": "index.ts",
   "scripts": {
     "dev": "webpack --mode development --watch",
     "build": "webpack --mode production"

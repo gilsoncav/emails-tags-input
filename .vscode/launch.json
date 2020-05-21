@@ -8,13 +8,11 @@
       "type": "chrome",
       "request": "launch",
       "name": "chrome",
-      "url": "http://127.0.0.1:5500/dist/emails-input__form-example.html",
-      "webRoot": "${workspaceFolder}/dist",
-      "sourceMaps": true,
-      "trace": "verbose",
+      "url": "http://127.0.0.1:5500/dist/index.html",
+      "webRoot": "${workspaceFolder}",
+      // "trace": "verbose",
       "sourceMapPathOverrides": {
-        "webpack:///./*": "${workspaceFolder}/src/*",
-        "webpack:///src/*": "${workspaceFolder}/src/*"
+        "webpack://EmailsInput/./*": "${workspaceFolder}/*"
       }
     }
   ]

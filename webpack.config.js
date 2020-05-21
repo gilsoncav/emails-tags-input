@@ -2,6 +2,7 @@ const nodeExternals = require('webpack-node-externals');
 const path = require('path');
 
 module.exports = {
+  mode: 'development',
   target: 'web',
   externals: [nodeExternals()],
   entry: './src/emails-input.ts',
@@ -13,11 +14,12 @@ module.exports = {
     libraryTarget: 'var',
     libraryExport: 'default',
     globalObject: 'this',
+    path: path.resolve(__dirname, 'dist'),
   },
-  devtool: 'inline-source-map',
-  devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
-  },
+  devtool: 'source-map',
+  // devServer: {
+  //   contentBase: path.resolve(__dirname, 'dist'),
+  // },
   module: {
     rules: [
       {
